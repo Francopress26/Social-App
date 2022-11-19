@@ -23,6 +23,10 @@ module.exports = (sequelize) => {
         allowNull:false,
         unique:true,
     },
+    email:{
+        type:DataTypes.STRING,
+        allowNull:true
+    },
     biography:{
         type:DataTypes.STRING
     },
@@ -31,6 +35,14 @@ module.exports = (sequelize) => {
     },
     profilePic:{
         type:DataTypes.STRING
+    },
+    instagram_username:{
+      type:DataTypes.STRING,
+      allowNull:true
+    },
+    twitter_username:{
+      type:DataTypes.STRING,
+      allowNull:true
     }
 
   });
