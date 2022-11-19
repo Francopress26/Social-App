@@ -11,4 +11,10 @@ router.get("photos/:username", async (req,res)=>{
     const userPhotos= await axios.get(`https://api.unsplash.com/users/${username}/photos?client_id=${API_KEY}`)
 })
 
+router.post("users", async (req,res)=>{
+    const username = req.params.username
+
+    const userPhotos= await axios.get(`https://api.unsplash.com/users/${username}/photos?client_id=${API_KEY}`)
+})
+
 module.exports=router
