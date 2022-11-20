@@ -5,38 +5,33 @@ import logo from '../../assets/logo.svg'
 import {GoogleCredentialResponse, GoogleLogin, googleLogout} from '@react-oauth/google'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
-
-
+import user from '../../types'
+// import { useDispatch } from 'react-redux'
+import { createUser } from '../../state/actions'
+import { useAppSelector,useAppDispatch } from '../../state/hooks'
 const Login=()=>{
-
     const navigate = useNavigate()
-    const video = useRef<HTMLVideoElement>();
-
+   
+    const dispatch= useAppDispatch()
 
  
-    interface user {
-        sub:string,
-        family_name:string,
-        given_name:string,
-        name:string,
-        email:string,
-        picture:string
-    }
+  
 
     const createOrGetUser= async(response: any): Promise<void>=>{
 
         const decoded:user=jwt_decode(response.credential)
-        const {family_name,given_name,name,picture,sub,email}= decoded
-        const user={
-            id:sub,
-            fullName:name,
-            first_name:family_name,
-            last_name:given_name,
+        const {family_name,given_name,name,picture,email}= decoded
+        const user1:user={
+           
+            family_name:family_name,
+            given_name:given_name,
+            name:name,
             email:email,
-            profilePic:picture
+            picture:picture
         }
-       console.log(user)
-       //aca iria el post del user (dispatch)
+       dispatch(createUser(user1))
+
+       navigate("/")
     }
 
     return(

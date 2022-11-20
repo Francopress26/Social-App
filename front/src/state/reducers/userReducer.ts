@@ -1,4 +1,4 @@
-import {user} from '../../types'
+import user from '../../types'
 
 const initialState:Object={
     user:[]
@@ -8,7 +8,7 @@ interface payload{
     type:string,
     payload?:user
 }
-const reducer = (state:user,action:payload) =>{
+const userReducer = (state=initialState,action:payload) =>{
         switch(action.type){
             case "createUser":
                 return {...state}
@@ -17,4 +17,4 @@ const reducer = (state:user,action:payload) =>{
         }
 }
 
-export default reducer
+export default userReducer

@@ -99,9 +99,14 @@ router.post("/google", async (req,res)=>{
      //falta biography y location q si me llegan de unsplash
     const {family_name,given_name,name,picture,email} = req.body
     try {
+        const findUser=await User.findOne({where:{email:email}})
+
+        if(findUser){ 
+            return}
+        
         const newUser= await User.create({
-            firstName:family_name,
-            lastName:given_name,
+            firstName:given_name,
+            lastName:family_name,
             username:name,
             email:email,
             biography:null,
