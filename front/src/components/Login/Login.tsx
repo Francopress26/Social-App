@@ -31,6 +31,8 @@ const Login=()=>{
             email:email,
             picture:picture
         }
+        localStorage.setItem('user',JSON.stringify(user1))
+
        dispatch(fetchGoogleUser(user1))
 
        navigate("/")

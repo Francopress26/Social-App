@@ -103,7 +103,7 @@ router.post("/google", async (req,res)=>{
 
         if(findUser){ 
             console.log("en el find")
-            return findUser}
+        return res.send(findUser)}
         
         const newUser= await User.create({
             firstName:given_name,
