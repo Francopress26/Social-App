@@ -4,16 +4,18 @@ import shareVideo from '../../assets/share.mp4'
 import logo from '../../assets/logo.svg'
 import {GoogleCredentialResponse, GoogleLogin, googleLogout} from '@react-oauth/google'
 import axios from 'axios'
+
 import jwt_decode from 'jwt-decode'
 import user from '../../types'
 // import { useDispatch } from 'react-redux'
-import { createUser } from '../../state/actions'
+// import { createOrLogUser } from '../../state/actions'
+import { fetchGoogleUser } from '../../state/reducers/userSlice'
 import { useAppSelector,useAppDispatch } from '../../state/hooks'
 const Login=()=>{
     const navigate = useNavigate()
    
     const dispatch= useAppDispatch()
-
+    
  
   
 
@@ -29,7 +31,7 @@ const Login=()=>{
             email:email,
             picture:picture
         }
-       dispatch(createUser(user1))
+       dispatch(fetchGoogleUser(user1))
 
        navigate("/")
     }

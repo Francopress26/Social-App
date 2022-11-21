@@ -102,7 +102,8 @@ router.post("/google", async (req,res)=>{
         const findUser=await User.findOne({where:{email:email}})
 
         if(findUser){ 
-            return}
+            console.log("en el find")
+            return findUser}
         
         const newUser= await User.create({
             firstName:given_name,

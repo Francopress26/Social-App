@@ -1,5 +1,5 @@
 // import { createStore, applyMiddleware} from 'redux'
- import userReducer from './reducers/userReducer'
+ import userSlice from './reducers/userSlice'
 // import thunk from 'redux-thunk'
 
 // export const store = createStore(
@@ -9,11 +9,8 @@
 // )
 import { configureStore } from '@reduxjs/toolkit'
 // ...
-
  const store = configureStore({
-  reducer: {
-        user:userReducer
-  },
+  reducer:userSlice
 })
 
 export default store
