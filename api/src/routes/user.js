@@ -44,24 +44,24 @@ const chargeUsers = async ()=>{
 }
 
 
-router.get("photos/:username", async (req,res)=>{
-    const username = req.params.username
-    const page=req.query.page
+// const postUserPhotos= async(page,username)=>{
+//     const Posts=[]
+//     try {
+//         const userPhotos= await axios.get(`https://api.unsplash.com/users/${username}/photos?page=${page}&client_id=${API_KEY}`) 
+          
+//         userPhotos.data.forEach((photo)=>{
+//                 const {description} =photo
+//                 const image=photo.urls.full
+//                 const Post ={description,image}
+//                 Posts.push(Post)
+//             })
+//         console.log(Posts)
+//         return Posts
 
-    const Posts=[]
-    try {
-        const userPhotos= await axios.get(`https://api.unsplash.com/users/${username}/photos?page=${page? page : 1}&client_id=${API_KEY}`) 
-            userPhotos.forEach((photo)=>{
-                const {created_at,width,height,description} =photo
-                const {full,small}=photo.urls
-                const Post ={created_at,width,height,description,full,small}
-                Posts.push(Post)
-            })
-        res.status(200).send(Posts)
-    } catch (error) {
-        res.status(400).send(error)
-    }
-})
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
 
 router.post("", async (req,res)=>{
@@ -122,6 +122,24 @@ router.post("/google", async (req,res)=>{
     }
    
 })
+ router.post("/posts",async (req,res)=>{
+  
+      try {
+        const posts=postUserPhotos(index,username)
+        const findUser=await User.findOne({where:{username:username}})
+        console.log(findUser)
+        posts.forEach(async(e)=>{
+          await findUser.addPost(e)
+        })
+        res.status(200).send("Ok?")
 
+      } catch (error) {
+        console.log(error)
+      }
+     
+        
+    
+
+ })
 
 module.exports=router
