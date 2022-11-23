@@ -8,12 +8,13 @@ const API_KEY=process.env.ACCESS_KEY
 
 
 router.get("", async (req,res) =>{
-    const page = req.query.page
-    
-    const response = await axios.get(`https://api.unsplash.com/photos/?page=${page ? page : 1}&client_id=${API_KEY}`)
+   try {
+    const posts = await Post.findAll()
+    res.status(200).send(posts)
+   } catch (error) {
+      console.log(error)
+   }
 
-    console.log(response.data)
-     res.json(response.data)
 })
 
 
@@ -22,7 +23,7 @@ const postUserPhotos= async(page,username)=>{
     try {
         const userPhotos= await axios.get(`https://api.unsplash.com/users/${username}/photos?page=${page}&client_id=${API_KEY}`) 
           console.log(userPhotos.data)
-        userPhotos.data.forEach((photo)=>{
+        userPhotos.data?.forEach((photo)=>{
                 const {description} =photo
                 const image=photo.urls.full
                 const Post ={description,image}
@@ -38,7 +39,7 @@ const postUserPhotos= async(page,username)=>{
 
 
 router.post("/posts",async (req,res)=>{
-    const username="sunx"
+    const username="yunustug"
     // const index=10
       try {
         for (let index = 0; index < 11; index++) {

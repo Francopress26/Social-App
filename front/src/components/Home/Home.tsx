@@ -7,13 +7,16 @@ import Sidebar from '../Sidebar/Sidebar'
 import { useAppSelector}  from '../../state/hooks'
 import { actualUser } from '../../state/reducers/userSlice'
 import { useAppDispatch } from '../../state/hooks'
+import { getAllPosts } from '../../state/reducers/userSlice'
 const Home = ()=>{
     const [toggleSidebar,setToggleSidebar]=useState(false)
     const scrollRef=useRef(null)
     const user = useAppSelector((state)=>state.userActual)
     const dispatch=useAppDispatch()
     const user1 = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
-
+    useEffect(()=>{
+        dispatch(getAllPosts())
+    },[])
    
        
     return(

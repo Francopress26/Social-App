@@ -1,9 +1,7 @@
-import React from "react";
+import React, { JSXElementConstructor } from "react";
 import Masonry from 'react-masonry-css'
-
-interface pins {
-    pins:[{url:string}]
-}
+import { PostInterface } from "../../types";
+import Post from '../Post/Post'
 
 const breakpointObj={
     default:4,
@@ -13,12 +11,16 @@ const breakpointObj={
     1000:2,
     500:1,
 }
-const MasonryLayout=(pins:pins)=>{
+
+
+
+const MasonryLayout=(posts:PostInterface[])=>{
+   
 
 
     return (
         <Masonry className="flex animate-slide-fwd" breakpointCols={breakpointObj}>
-            {/* {pins.pins?.map((pin)=><Pin key={pin._id} pin={pin} className='w-max'/>)} */}
+            {/* {posts?.map((post)=><Post  id={post.id} image={post.image} className='w-max'/>)} */}
         </Masonry>
     )
 }
