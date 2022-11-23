@@ -38,21 +38,22 @@ const postUserPhotos= async(page,username)=>{
 
 
 router.post("/posts",async (req,res)=>{
-    const username="yunustug"
-    const index=10
+    const username="sunx"
+    // const index=10
       try {
-        const posts=await postUserPhotos(index,username)
-        console.log("posts:")
-        console.log(posts)
-        posts.forEach(async(e)=>{
-          const postActual = await Post.create({
-            image:e.image,
-            description:e.description,
-            postedBy:username
+        for (let index = 0; index < 11; index++) {
+          const posts=await postUserPhotos(index,username)
+          posts.forEach(async(e)=>{
+            const postActual = await Post.create({
+              image:e.image,
+              description:e.description,
+              postedBy:username
+            })
+            console.log("Actual")
+            console.log(postActual)
           })
-          console.log("Actual")
-          console.log(postActual)
-        })
+        }
+      
         res.status(200).send("Ok?")
 
       } catch (error) {
@@ -60,7 +61,6 @@ router.post("/posts",async (req,res)=>{
       }
      
         
-    
 
  })
 

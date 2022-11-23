@@ -36,6 +36,11 @@ module.exports = (sequelize) => {
     profilePic:{
         type:DataTypes.STRING
     },
+    followers:{
+      type:DataTypes.ARRAY(DataTypes.STRING),
+      defaultValue:[],
+      allowNull:true
+    },
     instagram_username:{
       type:DataTypes.STRING,
       allowNull:true

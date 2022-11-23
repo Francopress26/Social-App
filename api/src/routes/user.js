@@ -2,7 +2,7 @@ const { Router} = require('express');
 const router = Router();
 require('dotenv').config();
 const axios = require("axios");
-const {User} = require('../db.js')
+const {User,Post} = require('../db.js')
 
 const API_KEY=process.env.ACCESS_KEY
 
@@ -123,13 +123,12 @@ router.post("/google", async (req,res)=>{
    
 })
  router.post("/posts",async (req,res)=>{
-  
+    const username="yunustug"
       try {
-        const posts=postUserPhotos(index,username)
-        const findUser=await User.findOne({where:{username:username}})
-        console.log(findUser)
-        posts.forEach(async(e)=>{
-          await findUser.addPost(e)
+        const findUser = await User.findOne({where:{username:username}})
+        const posts = await Post.findAll({where: {postedBy:username}})
+        posts.forEach(async(post)=>{
+            await findUser.addPost(post)
         })
         res.status(200).send("Ok?")
 
