@@ -9,6 +9,7 @@ import { actualUser } from '../../state/reducers/userSlice'
 import { useAppDispatch } from '../../state/hooks'
 import { getAllPosts } from '../../state/reducers/userSlice'
 import MasonryLayout from '../MasonryLayout/MasonryLayout'
+import Feed from '../Feed/Feed'
 const Home = ()=>{
     const [toggleSidebar,setToggleSidebar]=useState(false)
     const scrollRef=useRef(null)
@@ -48,13 +49,14 @@ const Home = ()=>{
             </div>
          
             <div className='pb-2 flex-1 h-screen overflow-y-scroll ' ref={scrollRef}>
-                {/* <Routes> */}
-                {/* <Route path="/user-profile/:userId" element={<UserProfile/>}/> */}
-                {/* <Route path="/*" element={<Pins user={user && user}/>}/> */}
+                <Routes>
+                <Route path="/user-profile/:userId" />
+                <Route path='/*' element={<Feed/>} />
+
                   
-                {/* </Routes> */}
+                </Routes>
             </div>
-            <MasonryLayout/>
+           
         </div>
     )
 }

@@ -12,6 +12,7 @@ interface PostI{
     description:string,
     likes:number,
     postedBy:string,
+    profilePic:string,
     className?:string
 }
 

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch,useAppSelector } from '../../state/hooks';
 import { PostI } from '../../types';
 import MasonryLayout from '../MasonryLayout/MasonryLayout';
+import Navbar from '../Navbar/Navbar';
 const Feed = () => {
   const [pins, setPins] = useState();
   const [loading, setLoading] = useState(false);
@@ -19,11 +20,9 @@ const Feed = () => {
     );
   }
   return (
-    <div>
-      
+    <div className='h-1/2'>
+        <Navbar/>
         <MasonryLayout/>
-     
-
     </div>
   );
 };

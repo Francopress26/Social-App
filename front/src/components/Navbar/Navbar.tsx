@@ -5,11 +5,11 @@ import { useAppSelector } from "../../state/hooks"
 import { useAppDispatch } from "../../state/hooks"
 import userSlice, { actualUser } from "../../state/reducers/userSlice"
 import { useEffect } from "react"
-import user from "../../types"
+
 const Navbar=()=>{
     const navigate= useNavigate()
     const dispatch= useAppDispatch()
-    const user1:user = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
+    const user1 = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
 
     return(
 

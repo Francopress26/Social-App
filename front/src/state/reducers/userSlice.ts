@@ -67,10 +67,9 @@ export const userSlice = createSlice({
                         })
         builder.addCase(getAllPosts.pending,state =>{state.loading=true})
         builder.addCase(getAllPosts.fulfilled,(state,action:any)=>{
-            console.log("En el builder")
-            console.log(action.payload)
             state.loading=false
-            state.posts= action.payload                                 
+            console.log(action.payload)
+            state.posts= action.payload                                
 })
     },
   })

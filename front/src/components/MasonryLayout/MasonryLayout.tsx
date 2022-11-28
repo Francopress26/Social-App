@@ -19,7 +19,7 @@ const MasonryLayout=()=>{
     const posts:PostI[]  = useAppSelector((state)=>state.posts)
     return (
         <Masonry className="flex animate-slide-fwd" breakpointCols={breakpointObj}>
-            {posts?.map((post)=><Post id={post.id} image={post.image} description={post.description} postedBy={post.postedBy} likes={post.likes}/>)}
+            {posts?.map((post)=><Post key={post.id} id={post.id} image={post.image} description={post.description} postedBy={post.postedBy} likes={post.likes} profilePic={post.profilePic}/>)}
         </Masonry>
     )
 }

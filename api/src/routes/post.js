@@ -2,9 +2,11 @@ const { Router} = require('express');
 const router = Router();
 require('dotenv').config();
 const axios = require("axios");
-const {Post} = require("../db.js")
+const {Post,User} = require("../db.js")
 
 const API_KEY=process.env.ACCESS_KEY
+
+// https://api.unsplash.com/photos?client_id=BSuAJQo2Cc1kD6O70SS-vXXruKOTnAv9SVXNGhJ9ExA
 
 
 router.get("", async (req,res) =>{
@@ -25,7 +27,7 @@ const postUserPhotos= async(page,username)=>{
           console.log(userPhotos.data)
         userPhotos.data?.forEach((photo)=>{
                 const {description} =photo
-                const image=photo.urls.full
+                const image=photo.urls.regular
                 const Post ={description,image}
                 Posts.push(Post)
             })
@@ -42,13 +44,16 @@ router.post("/posts",async (req,res)=>{
     const username="yunustug"
     // const index=10
       try {
-        for (let index = 0; index < 11; index++) {
+        const user = await User.findOne({where: {username:username}})
+       
+        for (let index = 0; index < 3; index++) {
           const posts=await postUserPhotos(index,username)
           posts.forEach(async(e)=>{
             const postActual = await Post.create({
               image:e.image,
               description:e.description,
-              postedBy:username
+              postedBy:username,
+              profilePic:user?.profilePic
             })
             console.log("Actual")
             console.log(postActual)

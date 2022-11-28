@@ -29,6 +29,10 @@ module.exports = (sequelize) => {
     postedBy:{
         type:DataTypes.STRING,
         allowNull:false
+    },
+    profilePic:{
+      type:DataTypes.STRING,
+      allowNull:false
     }
 
   });
