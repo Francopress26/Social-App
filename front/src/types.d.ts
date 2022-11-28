@@ -6,24 +6,15 @@ interface user {
     picture:string
 }
 
-interface Post{
+interface PostI{
     id:string,
     image:string,
     description:string,
     likes:number,
-    postedBy:string
-}
-
-interface PostInterface {
-    id:string,
-    image:string,
     postedBy:string,
-    description:string,
-    likes:number
+    className?:string
 }
 
-interface PostsInterface extends Array<PostInterface>{}
-
-export  {user,Post,PostInterface,PostsInterface}
+export  {user,PostI}
 
 

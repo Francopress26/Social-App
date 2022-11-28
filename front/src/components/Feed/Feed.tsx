@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch,useAppSelector } from '../../state/hooks';
+import { PostI } from '../../types';
 import MasonryLayout from '../MasonryLayout/MasonryLayout';
-import { PostInterface } from '../../types';
 const Feed = () => {
   const [pins, setPins] = useState();
   const [loading, setLoading] = useState(false);
   const { categoryId } = useParams();
 
-  const posts:PostInterface[] = useAppSelector((state)=>state.posts)
+  const posts:PostI[] = useAppSelector((state)=>state.posts)
   const ideaName = categoryId || 'new';
 
   

@@ -1,4 +1,4 @@
-import {user,Post, PostInterface} from '../../types'
+import {user,PostI} from '../../types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState} from '../store'
@@ -7,7 +7,7 @@ import axios from 'axios'
 
 interface InitialState{
     userActual:user | null,
-    posts:PostInterface[] 
+    posts:PostI[]
     loading:boolean,
     error:string | null
 }
@@ -38,7 +38,7 @@ export const getAllPosts = createAsyncThunk(
     'userSlice/getAllPosts',
     async(data,thunkApi)=>{
         try {
-            const data = await axios.get<Post>("http://localhost:3001/post")
+            const data = await axios.get<PostI>("http://localhost:3001/post")
             return data
         } catch ( error:any) {
             const message = error.message;

@@ -1,6 +1,6 @@
 import React, { JSXElementConstructor } from "react";
 import Masonry from 'react-masonry-css'
-import { PostInterface } from "../../types";
+import { PostI } from "../../types";
 import Post from '../Post/Post'
 
 const breakpointObj={
@@ -14,13 +14,13 @@ const breakpointObj={
 
 
 
-const MasonryLayout=(posts:PostInterface[])=>{
+const MasonryLayout=(posts:PostI[])=>{
    
 
 
     return (
         <Masonry className="flex animate-slide-fwd" breakpointCols={breakpointObj}>
-            {/* {posts?.map((post)=><Post  id={post.id} image={post.image} className='w-max'/>)} */}
+            {posts?.map((post)=><Post id={post.id} image={post.image} description={post.description} postedBy={post.postedBy} likes={post.likes}/>)}
         </Masonry>
     )
 }

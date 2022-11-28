@@ -3,9 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
+import { PostI } from '../../types';
 import logo from '../../assets/download.svg'
 
-const Post = (id:string,image:string,description:string,likes:string,postedBy:string) => {
+const Post = (post:PostI) => {
   const [postHovered, setPostHovered] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
 
