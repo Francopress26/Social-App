@@ -1,5 +1,6 @@
 import React, { JSXElementConstructor } from "react";
 import Masonry from 'react-masonry-css'
+import { useAppSelector } from "../../state/hooks";
 import { PostI } from "../../types";
 import Post from '../Post/Post'
 
@@ -14,10 +15,8 @@ const breakpointObj={
 
 
 
-const MasonryLayout=(posts:PostI[])=>{
-   
-
-
+const MasonryLayout=()=>{
+    const posts:PostI[]  = useAppSelector((state)=>state.posts)
     return (
         <Masonry className="flex animate-slide-fwd" breakpointCols={breakpointObj}>
             {posts?.map((post)=><Post id={post.id} image={post.image} description={post.description} postedBy={post.postedBy} likes={post.likes}/>)}

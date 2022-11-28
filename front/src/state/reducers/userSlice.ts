@@ -39,7 +39,7 @@ export const getAllPosts = createAsyncThunk(
     async(data,thunkApi)=>{
         try {
             const data = await axios.get<PostI>("http://localhost:3001/post")
-            return data
+            return data.data
         } catch ( error:any) {
             const message = error.message;
             return thunkApi.rejectWithValue(message);

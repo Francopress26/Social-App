@@ -8,7 +8,7 @@ const Feed = () => {
   const [loading, setLoading] = useState(false);
   const { categoryId } = useParams();
 
-  const posts:PostI[] = useAppSelector((state)=>state.posts)
+  // const posts:PostI[]  = useAppSelector((state)=>state.posts)
   const ideaName = categoryId || 'new';
 
   
@@ -20,11 +20,10 @@ const Feed = () => {
   }
   return (
     <div>
-      {/* {pins && (
-        <MasonryLayout posts={[]} />
-      )} */}
+      
+        <MasonryLayout/>
+     
 
-      <div>MASONRY LAYOUT</div>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { useAppSelector}  from '../../state/hooks'
 import { actualUser } from '../../state/reducers/userSlice'
 import { useAppDispatch } from '../../state/hooks'
 import { getAllPosts } from '../../state/reducers/userSlice'
+import MasonryLayout from '../MasonryLayout/MasonryLayout'
 const Home = ()=>{
     const [toggleSidebar,setToggleSidebar]=useState(false)
     const scrollRef=useRef(null)
@@ -50,9 +51,10 @@ const Home = ()=>{
                 {/* <Routes> */}
                 {/* <Route path="/user-profile/:userId" element={<UserProfile/>}/> */}
                 {/* <Route path="/*" element={<Pins user={user && user}/>}/> */}
-                    <div>Rutas aca</div>
+                  
                 {/* </Routes> */}
             </div>
+            <MasonryLayout/>
         </div>
     )
 }
