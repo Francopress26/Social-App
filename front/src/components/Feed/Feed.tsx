@@ -23,6 +23,8 @@ const Feed = () => {
       {/* {pins && (
         <MasonryLayout posts={[]} />
       )} */}
+
+      <div>MASONRY LAYOUT</div>
     </div>
   );
 };
