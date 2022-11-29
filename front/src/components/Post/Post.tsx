@@ -1,57 +1,47 @@
 import React, { MouseEventHandler, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 import { PostI, user } from '../../types';
 import logo from '../../assets/download.svg'
 import {FcLike,FcLikePlaceholder} from 'react-icons/fc'
+import Detail from '../Detail/Detail';
+
 const Post = (post:PostI) => {
-  const [postHovered, setPostHovered] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
   const[liked,setLiked]=useState(false)
   const navigate = useNavigate();
+  const [modalImg, setModalImg]=useState(false)
+const imgClose = " rounded-xl p-2 m-2 border-black"
 
-//   const { postedBy, image, _id, destination } = pin;
+// const imgOpen = 'bg-black w-1/2 h-min fixed fixed z-50 aspect-square'
 
 const user1:user = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
-
-
-
-
-
-//   const savePin = (id) => {
-//     if (alreadySaved?.length === 0) {
-//       setSavingPost(true);
-
-//       client
-//         .patch(id)
-//         .setIfMissing({ save: [] })
-//         .insert('after', 'save[-1]', [{
-//           _key: uuidv4(),
-//           userId: user?.googleId,
-//           postedBy: {
-//             _type: 'postedBy',
-//             _ref: user?.googleId,
-//           },
-//         }])
-//         .commit()
-//         .then(() => {
-//           window.location.reload();
-//           setSavingPost(false);
-//         });
-//     }
-//   };
 const handleLike:MouseEventHandler<HTMLButtonElement>=()=>{
   setLiked(!liked)
 }
 
+
+
+
   return (
       <div >
+        {/* <div className='bg-black min-w-full min-h-full fixed z-50'>Lalala</div> */}
+        {/* {modalImg && (
+        <div className='bg-black  mb-12 fixed z-50 h-1/4  right-20  w-9/12'>
+        <img src={post.image} className="h-full w-2/3  "  onClick={()=>{setModalImg(!modalImg)}} />
+        </div>
 
+ )}   */}
         <div className=" relative group">
-        <img src={post.image} className=" rounded-xl p-2 m-2 border-black "/>
+          <img src={post.image} className={imgClose}  onClick={() => navigate(`/detail/${post.id}`)} />
+          
+         
+        {post.description && (        
         <div className="opacity-0 group-hover:opacity-100 duration-300 absolute inset-x-0 w-14/12 ml-4  h-2/4 bottom-2    bg-black bg-opacity-70 text-white font-semibold text-center">Description: {post.description}</div>
+        )}
+        
         </div>
 
       <div className='flex justify-between'>
@@ -64,10 +54,13 @@ const handleLike:MouseEventHandler<HTMLButtonElement>=()=>{
         <p className="font-semibold capitalize">{post.postedBy}</p>
       </Link>
 
-      <button onClick={(e)=>handleLike(e)}>{liked?<FcLike className='mr-4 ' size={40}/> :<FcLikePlaceholder className='mr-4 ' size={40}/>}</button>
+      <div className='flex'>   
+           <button onClick={(e)=>handleLike(e)}>{liked?<FcLike className='mr-4 ' size={40}/> :<FcLikePlaceholder className='mr-4 ' size={40}/>}</button>
+            <span className='mt-2 mr-2 font-semibold'>{post.likes}</span>
+      </div>
       </div>
      
-        
+       
       </div>
 
       

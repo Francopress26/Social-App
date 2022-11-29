@@ -6,6 +6,7 @@ import {GoogleOAuthProvider} from '@react-oauth/google'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import Feed from './components/Feed/Feed'
+import Detail from './components/Detail/Detail'
 function App() {
   
  const clientId= import.meta.env.VITE_GOOGLE_API_TOKEN
@@ -16,8 +17,7 @@ function App() {
 
   <Routes>
     <Route path='login' element={<Login/>}/>
-    <Route path='/*' element={<Home/>} />
-
+      <Route path='/*' element={<Home/>} />
   </Routes>
   </GoogleOAuthProvider>
   )

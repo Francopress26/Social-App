@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../state/hooks'
 import { getAllPosts } from '../../state/reducers/userSlice'
 import MasonryLayout from '../MasonryLayout/MasonryLayout'
 import Feed from '../Feed/Feed'
+import Detail from '../Detail/Detail'
 const Home = ()=>{
     const [toggleSidebar,setToggleSidebar]=useState(false)
     const scrollRef=useRef(null)
@@ -24,7 +25,7 @@ const Home = ()=>{
     return(
         <div className='flex bg-gray-50 md:flex-row flex-col h-screen transaction-height duration-75 ease-out '>
             
-            <div className='hidden md:flex h-screen flex-initial'>
+            <div className='hidden md:flex h-screen flex-initial border-r-black border-solid border'>
                 <Sidebar closeToggle={""} />
             </div>
             <div className='flex md:hidden flex-row'>
@@ -39,7 +40,7 @@ const Home = ()=>{
                 </Link>
                 </div>
                 {toggleSidebar && (
-                <div className='fixed w-4/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in '>
+                <div className='fixed w-2/4 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in '>
                     <div className='absolute w-full flex justify-end items-center p-2'>
                         <AiFillCloseCircle fontSize={30}  className="cursor-pointer" onClick={()=>setToggleSidebar(false)}/>
                     </div>
@@ -52,7 +53,7 @@ const Home = ()=>{
                 <Routes>
                 <Route path="/user-profile/:userId" />
                 <Route path='/*' element={<Feed/>} />
-
+                
                   
                 </Routes>
             </div>
