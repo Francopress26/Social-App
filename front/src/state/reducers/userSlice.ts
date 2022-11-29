@@ -6,13 +6,18 @@ import axios from 'axios'
 
 
 interface InitialState{
-    userActual:user | null,
+    userActual:user,
     posts:PostI[]
     loading:boolean,
     error:string | null
 }
 const initialState:InitialState={
-    userActual:null,
+    userActual:{    id:"",
+        family_name:"",
+        given_name:"",
+        name:"",
+        email:"",
+        picture:""},
     posts:[],
     loading:false,
     error:null

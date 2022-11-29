@@ -6,7 +6,7 @@ import {GoogleCredentialResponse, GoogleLogin, googleLogout} from '@react-oauth/
 import axios from 'axios'
 
 import jwt_decode from 'jwt-decode'
-import user from '../../types'
+import {user} from '../../types'
 // import { useDispatch } from 'react-redux'
 // import { createOrLogUser } from '../../state/actions'
 import { fetchGoogleUser } from '../../state/reducers/userSlice'
@@ -22,9 +22,9 @@ const Login=()=>{
     const createOrGetUser= async(response: any): Promise<void>=>{
 
         const decoded:user=jwt_decode(response.credential)
-        const {family_name,given_name,name,picture,email}= decoded
+        const {family_name,given_name,name,picture,email,id:sub}= decoded
         const user1:user={
-           
+            id:sub,
             family_name:family_name,
             given_name:given_name,
             name:name,

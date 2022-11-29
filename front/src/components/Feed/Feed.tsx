@@ -20,8 +20,7 @@ const Feed = () => {
     );
   }
   return (
-    <div className='h-1/2'>
-        <Navbar/>
+    <div >
         <MasonryLayout/>
     </div>
   );
