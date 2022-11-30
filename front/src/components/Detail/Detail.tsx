@@ -22,6 +22,7 @@ const Detail = ()=>{
     <>
     <div className="flex justify-center justify-items-center align-middle h-5/6 pt-12">
         <div className=" border-solid border-2 w-1/2 h-5/6 flex justify-center align-middle rounded-xl"><img src={postDetail.post.image} className="h-full w-fit p-2 rounded-xl"></img></div>
+        
         <div className="border-t-solid border-t-2 border-r-solid border-r-2 border-b-solid border-b-2 w-2/5 h-4/6  mt-12 flex flex-col justify-start">
             <div className="flex justify-around mt-6 h-1/3 min-w-full align-middle">
                 <div className="flex w-2/4">
@@ -34,6 +35,8 @@ const Detail = ()=>{
                 <p>Likes {postDetail.post.likes}</p>
                 <p>Descripcion {postDetail.post.description}</p>
             </div>
+
+
             
         </div>
     </div>
