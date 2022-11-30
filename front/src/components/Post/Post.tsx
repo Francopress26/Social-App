@@ -7,6 +7,8 @@ import { PostI, user } from '../../types';
 import logo from '../../assets/download.svg'
 import {FcLike,FcLikePlaceholder} from 'react-icons/fc'
 import Detail from '../Detail/Detail';
+import { useAppDispatch } from '../../state/hooks';
+import { getDetailPost } from '../../state/reducers/userSlice';
 
 const Post = (post:PostI) => {
   const [savingPost, setSavingPost] = useState(false);
@@ -21,9 +23,13 @@ const user1:user = localStorage.getItem('user') !=='undefined' ? JSON.parse(loca
 const handleLike:MouseEventHandler<HTMLButtonElement>=()=>{
   setLiked(!liked)
 }
+const dispatch=useAppDispatch()
 
 
-
+const handleClick:any= ()=>{
+  dispatch(getDetailPost(post.id))
+  navigate(`/detail/${post.id}`)
+}
 
   return (
       <div >
@@ -35,7 +41,7 @@ const handleLike:MouseEventHandler<HTMLButtonElement>=()=>{
 
  )}   */}
         <div className=" relative group">
-          <img src={post.image} className={imgClose}  onClick={() => navigate(`/detail/${post.id}`)} />
+          <img src={post.image} className={imgClose}  onClick={() =>handleClick() } />
           
          
         {post.description && (        

@@ -1,4 +1,4 @@
-import {user,PostI} from '../../types'
+import {user,PostI, bdUser} from '../../types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState} from '../store'
@@ -7,7 +7,8 @@ import axios from 'axios'
 
 interface InitialState{
     userActual:user,
-    posts:PostI[]
+    posts:PostI[],
+    postDetail?:{user:bdUser,post:PostI} | null
     loading:boolean,
     error:string | null
 }
@@ -42,6 +43,7 @@ export const fetchGoogleUser = createAsyncThunk(
 export const getAllPosts = createAsyncThunk(
     'userSlice/getAllPosts',
     async(data,thunkApi)=>{
+        if(initialState.posts.length>1){return "Ya ta lleno papu"}
         try {
             const data = await axios.get<PostI>("http://localhost:3001/post")
             return data.data
@@ -51,12 +53,28 @@ export const getAllPosts = createAsyncThunk(
         }
 })
 
+export const getDetailPost = createAsyncThunk(
+    'userSlice/getDetailPost',
+    async (data:string | undefined,thunkApi)=>{
+        try {
+            const response = await axios.get<{user:bdUser,post:PostI}>(`http://localhost:3001/post/detail/${data}`)
+            return response.data
+        } catch (error:any) {
+            const message = error.message;
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+)
+
 export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
         actualUser(state,action:PayloadAction<user>){
             state.userActual=action.payload
+        },
+        clearUserActual(state){
+            state.postDetail=null
         }
     },
     extraReducers(builder){
@@ -75,9 +93,23 @@ export const userSlice = createSlice({
             state.loading=false
             console.log(action.payload)
             state.posts= action.payload                                
-})
+                        })
+        builder.addCase(getAllPosts.rejected, (state,action:PayloadAction<any>)=>{
+            state.loading=false, state.error=action.payload
+                        })
+        builder.addCase(getDetailPost.pending,state=>{state.loading=true})
+        builder.addCase(getDetailPost.fulfilled,(state,action:PayloadAction<{user:bdUser,post:PostI}>)=>{
+            console.log("En el builder")
+            console.log(action.payload)
+            state.loading=false
+            state.postDetail= action.payload                                 
+                        })
+        builder.addCase(getDetailPost.rejected, (state,action:PayloadAction<any>)=>{
+            state.loading=false, state.error=action.payload
+                        })
+
     },
   })
 
-export const {actualUser} = userSlice.actions
+export const {actualUser,clearUserActual} = userSlice.actions
 export default userSlice.reducer

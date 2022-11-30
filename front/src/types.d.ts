@@ -7,6 +7,22 @@ interface user {
     picture:string
 }
 
+interface bdUser{
+    biography:string,
+    email:string,
+    firstName:string,
+    followed:[],
+    followers:[],
+    id:string, 
+    instagram_username:string,
+    lastName:string,
+    location:string,
+    profilePic:string,
+    twitter_username:string,
+    updatedAt:string,
+    username:string
+}
+
 interface PostI{
     id:string,
     image:string,
@@ -17,6 +33,6 @@ interface PostI{
     className?:string
 }
 
-export  {user,PostI}
+export  {user,PostI,bdUser}
 
 

@@ -16,10 +16,11 @@ import { user } from '../../types'
 const Home = ()=>{
     const [toggleSidebar,setToggleSidebar]=useState(false)
     const scrollRef=useRef(null)
-    const user = useAppSelector((state)=>state.userActual)
+    const posts = useAppSelector((state)=>state.posts)
     const dispatch=useAppDispatch()
     const user1:user = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
     useEffect(()=>{
+        
         dispatch(getAllPosts())
         dispatch(actualUser(user1))
     },[])

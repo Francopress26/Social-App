@@ -70,4 +70,16 @@ router.post("/posts",async (req,res)=>{
 
  })
 
+ router.get("/detail/:id", async(req,res)=>{
+      const id = req.params.id
+      try {
+        const findPost= await Post.findOne({where:{id:id}})
+        const findUser = await User.findOne({where:{id:findPost.userId}})
+        const details = {user:findUser,post:findPost}
+        res.status(200).send(details)
+      } catch (error) {
+          res.status(400).send(error)
+      }
+ })
+
 module.exports=router
