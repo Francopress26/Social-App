@@ -22,10 +22,15 @@ module.exports = (sequelize) => {
        type:DataTypes.INTEGER,
        defaultValue:0
     },
-    saved:{
-        type:DataTypes.INTEGER,
-        defaultValue:0
-    },
+    comments: { 
+      type: DataTypes.STRING, 
+      get: function() {
+          return JSON.parse(this.getDataValue('comments'));
+      }, 
+      set: function(val) {
+          return this.setDataValue('comments', JSON.stringify(val));
+      }
+  },
     postedBy:{
         type:DataTypes.STRING,
         allowNull:false

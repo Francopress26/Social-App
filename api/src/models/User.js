@@ -36,15 +36,32 @@ module.exports = (sequelize) => {
     profilePic:{
         type:DataTypes.STRING
     },
-    followers:{
-      type:DataTypes.ARRAY(DataTypes.STRING),
-      defaultValue:[],
-      allowNull:true
+    followers: { 
+      type: DataTypes.STRING, 
+      get: function() {
+          return JSON.parse(this.getDataValue('followers'));
+      }, 
+      set: function(val) {
+          return this.setDataValue('followers', JSON.stringify(val));
+      }
     },
-    followed:{
-      type:DataTypes.ARRAY(DataTypes.STRING),
-      defaultValue:[],
-      allowNull:true
+    followed: { 
+      type: DataTypes.STRING, 
+      get: function() {
+        return JSON.parse(this.getDataValue('followed'));
+      }, 
+      set: function(val) {
+        return this.setDataValue('followed', JSON.stringify(val));
+      }
+    },
+    liked: { 
+      type: DataTypes.STRING, 
+      get: function() {
+          return JSON.parse(this.getDataValue('liked'));
+      }, 
+      set: function(val) {
+          return this.setDataValue('liked', JSON.stringify(val));
+      }
     },
     instagram_username:{
       type:DataTypes.STRING,

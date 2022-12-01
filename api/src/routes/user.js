@@ -104,11 +104,11 @@ router.post("/google", async (req,res)=>{
         if(findUser){ 
             console.log("en el find")
         return res.send(findUser)}
-        
+        const username= email.split("@")[0]
         const newUser= await User.create({
             firstName:given_name,
             lastName:family_name,
-            username:name,
+            username:username,
             email:email,
             biography:null,
             location:null,
