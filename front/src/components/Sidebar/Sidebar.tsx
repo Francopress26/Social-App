@@ -2,9 +2,10 @@ import React from 'react'
 import { NavLink,Link } from 'react-router-dom'
 import {RiHomeFill }from 'react-icons/ri'
 import {IoIosArrowForward} from 'react-icons/io'
-import { useAppSelector } from '../../state/hooks'
+import { useAppDispatch, useAppSelector } from '../../state/hooks'
 import logo from '../../assets/download.svg'
 import user from '../../types'
+import { getUserProfile } from '../../state/reducers/userSlice'
 
 const Sidebar = (closeToggle:any)=>{
    
@@ -20,12 +21,12 @@ const Sidebar = (closeToggle:any)=>{
         {name:"Gaming"},
         {name:"Coding"},
     ]
-    
+    const dispatch=useAppDispatch()
     
     const handleCloseSidebar=()=>{
         if(closeToggle) {
             
-          
+            // dispatch(getUserProfile(userAct?.id))
             closeToggle(false)
         }
     }
@@ -44,7 +45,7 @@ const Sidebar = (closeToggle:any)=>{
 
                     <NavLink to="/" 
                     className={({isActive})=>isActive?isActiveStyle:isNotActiveStyle} 
-                    onClick={handleCloseSidebar}
+                    // onClick={handleCloseSidebar}
                     >
                         <RiHomeFill/>
                         Home
@@ -65,9 +66,9 @@ const Sidebar = (closeToggle:any)=>{
                 </div>
             </div>
             {user &&(
-                <Link to={`/user-profile/${userAct?.id}`} 
+                <Link to={`/user-profile/${user.email}`} 
                 className="flex my-5 mb-3 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3"
-                onClick={handleCloseSidebar}
+            //    nClick={handleCloseSidebar} o
                 >
                     <img src={user?.picture} className="w-10 h-10 rounded-full" alt="userprofile"/>
                     <p>{user?.name}</p>

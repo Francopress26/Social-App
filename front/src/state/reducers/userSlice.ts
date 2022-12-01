@@ -28,7 +28,6 @@ export const fetchGoogleUser = createAsyncThunk(
     try {
     const response = await axios.post<bdUser>(`http://localhost:3001/user/google`,data)
     thunkApi.dispatch(actualUser(response.data))
-    console.log(response)
     return response.data
             
         } catch (error:any) {
@@ -61,21 +60,21 @@ export const getDetailPost = createAsyncThunk(
             const message = error.message;
             return thunkApi.rejectWithValue(message);
         }
-    }
-)
+})
 
 export const getUserProfile = createAsyncThunk(
     'userSlice/getUserProfile',
     async(data:string | undefined,thunkApi)=>{
         try {
             const userProfile = await axios.get<bdUser>(`http://localhost:3001/user/${data}`)
+            console.log("EN EL GET USER PROFILE")
+            console.log(userProfile.data)
             return userProfile.data
         } catch (error:any) {
             const message = error.message;
             return thunkApi.rejectWithValue(message);
         }
-    }
-)
+})
 
 export const userSlice = createSlice({
     name: 'user',
@@ -91,8 +90,6 @@ export const userSlice = createSlice({
     extraReducers(builder){
         builder.addCase(fetchGoogleUser.pending, state =>{state.loading=true})
         builder.addCase(fetchGoogleUser.fulfilled,(state,action:PayloadAction<bdUser>)=>{
-                                        console.log("En el builder")
-                                        console.log(action.payload)
                                         state.loading=false
                                         state.userActual= action.payload                                 
                         })
@@ -104,7 +101,6 @@ export const userSlice = createSlice({
         builder.addCase(getAllPosts.pending,state =>{state.loading=true})
         builder.addCase(getAllPosts.fulfilled,(state,action:any)=>{
             state.loading=false
-            console.log(action.payload)
             state.posts= action.payload                                
                         })
         builder.addCase(getAllPosts.rejected, (state,action:PayloadAction<any>)=>{

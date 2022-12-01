@@ -145,17 +145,34 @@ router.post("/google", async (req,res)=>{
  })
  router.get("/:id",async (req,res)=>{
     const {id}=req.params
-    try {
-        const findUser =await User.findOne({where:{id:id}})
-        if(findUser){
-            res.status(200).send(findUser)
-        }else{
-            res.status(200).send("cannot find")
+    const username = id.split("@")[0]
+    console.log(username)
+    if(username){
+        try {
+            const findUser =await User.findOne({where:{username:username}}) 
+            if(findUser){
+                res.status(200).send(findUser)
+            }else{
+                res.status(200).send("cannot find")
+            }  
+        } catch (error) {
+            console.log(error)
         }
-    } catch (error) {
-        console.log(error)
-        res.status(400).send(error)
+       
+    }else{
+        try {
+            const findUser =await User.findOne({where:{username:id}})
+            if(findUser){
+                res.status(200).send(findUser)
+            }else{
+                res.status(200).send("cannot find")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+       
     }
+ 
    
  })
 

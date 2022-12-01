@@ -51,7 +51,7 @@ const handleClick:any= ()=>{
         </div>
 
       <div className='flex justify-between'>
-      <Link to={"/"} className="flex gap-2 mt-2 items-center">
+      <Link to={`/user-profile/${post.postedBy}`} className="flex gap-2 mt-2 items-center">
         <img
           className="ml-4 w-8 h-8 rounded-full object-cover"
           src={post.profilePic}

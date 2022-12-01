@@ -5,7 +5,7 @@ import {Link,Route,Routes} from 'react-router-dom'
 import logo from '../../assets/download.svg'
 import Sidebar from '../Sidebar/Sidebar'
 import { useAppSelector}  from '../../state/hooks'
-import { actualUser } from '../../state/reducers/userSlice'
+import { actualUser, getUserProfile } from '../../state/reducers/userSlice'
 import { useAppDispatch } from '../../state/hooks'
 import { getAllPosts } from '../../state/reducers/userSlice'
 import MasonryLayout from '../MasonryLayout/MasonryLayout'
@@ -23,7 +23,8 @@ const Home = ()=>{
     useEffect(()=>{
         
         dispatch(getAllPosts())
-        // dispatch(actualUser(user1))
+        // HAGO EL GET USER ACTUAL ACA PERO CON EL MAIL Y DESPUES LOS DEMÁS COMPONENTES PUEDEN ACCEDER AL ID
+        dispatch(getUserProfile(user1.email))
     },[])
    
        
