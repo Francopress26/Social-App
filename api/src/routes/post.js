@@ -63,7 +63,7 @@ router.post("/posts",async (req,res)=>{
         res.status(200).send("Ok?")
 
       } catch (error) {
-        console.log(error)
+        console.log("error")
       }
      
         

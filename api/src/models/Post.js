@@ -24,6 +24,8 @@ module.exports = (sequelize) => {
     },
     comments: { 
       type: DataTypes.STRING, 
+      defaultValue:null,
+
       get: function() {
           return JSON.parse(this.getDataValue('comments'));
       }, 

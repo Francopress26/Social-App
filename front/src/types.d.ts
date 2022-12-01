@@ -11,8 +11,9 @@ interface bdUser{
     biography:string,
     email:string,
     firstName:string,
-    followed:[],
-    followers:[],
+    followed:[{username:string,profilePic:string}],
+    followers:[{username:string,profilePic:string}],
+    liked:postI[],
     id:string, 
     instagram_username:string,
     lastName:string,
@@ -28,6 +29,7 @@ interface PostI{
     image:string,
     description:string,
     likes:number,
+    comments:[{comment:string,username:string,profilePic:string}]
     postedBy:string,
     profilePic:string,
     className?:string

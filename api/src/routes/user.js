@@ -105,6 +105,7 @@ router.post("/google", async (req,res)=>{
             console.log("en el find")
         return res.send(findUser)}
         const username= email.split("@")[0]
+        console.log(username)
         const newUser= await User.create({
             firstName:given_name,
             lastName:family_name,
@@ -126,6 +127,8 @@ router.post("/google", async (req,res)=>{
     const username="yunustug"
       try {
         const findUser = await User.findOne({where:{username:username}})
+        console.log("user")
+        console.log(findUser)
         const posts = await Post.findAll({where: {postedBy:username}})
         posts.forEach(async(post)=>{
             await findUser.addPost(post)
@@ -139,6 +142,21 @@ router.post("/google", async (req,res)=>{
         
     
 
+ })
+ router.get("/:id",async (req,res)=>{
+    const {id}=req.params
+    try {
+        const findUser =await User.findOne({where:{id:id}})
+        if(findUser){
+            res.status(200).send(findUser)
+        }else{
+            res.status(200).send("cannot find")
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(400).send(error)
+    }
+   
  })
 
 module.exports=router

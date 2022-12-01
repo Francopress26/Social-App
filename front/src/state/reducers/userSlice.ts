@@ -6,20 +6,17 @@ import axios from 'axios'
 
 
 interface InitialState{
-    userActual:user,
+    userActual:bdUser | null,
     posts:PostI[],
     postDetail?:{user:bdUser,post:PostI} | null
+    userProfile:bdUser | null,
     loading:boolean,
     error:string | null
 }
 const initialState:InitialState={
-    userActual:{    id:"",
-        family_name:"",
-        given_name:"",
-        name:"",
-        email:"",
-        picture:""},
+    userActual:null,
     posts:[],
+    userProfile:null,
     loading:false,
     error:null
 }
@@ -27,9 +24,10 @@ const initialState:InitialState={
 export const fetchGoogleUser = createAsyncThunk(
     'userSlice/fetchGoogleUser', 
     async (data:user, thunkApi)=>{
-        thunkApi.dispatch(actualUser(data))
+       
     try {
-    const response = await axios.post<user>(`http://localhost:3001/user/google`,data)
+    const response = await axios.post<bdUser>(`http://localhost:3001/user/google`,data)
+    thunkApi.dispatch(actualUser(response.data))
     console.log(response)
     return response.data
             
@@ -66,11 +64,24 @@ export const getDetailPost = createAsyncThunk(
     }
 )
 
+export const getUserProfile = createAsyncThunk(
+    'userSlice/getUserProfile',
+    async(data:string | undefined,thunkApi)=>{
+        try {
+            const userProfile = await axios.get<bdUser>(`http://localhost:3001/user/${data}`)
+            return userProfile.data
+        } catch (error:any) {
+            const message = error.message;
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+)
+
 export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        actualUser(state,action:PayloadAction<user>){
+        actualUser(state,action:PayloadAction<bdUser>){
             state.userActual=action.payload
         },
         clearUserActual(state){
@@ -79,7 +90,7 @@ export const userSlice = createSlice({
     },
     extraReducers(builder){
         builder.addCase(fetchGoogleUser.pending, state =>{state.loading=true})
-        builder.addCase(fetchGoogleUser.fulfilled,(state,action:PayloadAction<user>)=>{
+        builder.addCase(fetchGoogleUser.fulfilled,(state,action:PayloadAction<bdUser>)=>{
                                         console.log("En el builder")
                                         console.log(action.payload)
                                         state.loading=false
@@ -88,6 +99,8 @@ export const userSlice = createSlice({
         builder.addCase(fetchGoogleUser.rejected, (state,action:PayloadAction<any>)=>{
                                         state.loading=false, state.error=action.payload
                         })
+
+
         builder.addCase(getAllPosts.pending,state =>{state.loading=true})
         builder.addCase(getAllPosts.fulfilled,(state,action:any)=>{
             state.loading=false
@@ -97,6 +110,8 @@ export const userSlice = createSlice({
         builder.addCase(getAllPosts.rejected, (state,action:PayloadAction<any>)=>{
             state.loading=false, state.error=action.payload
                         })
+
+
         builder.addCase(getDetailPost.pending,state=>{state.loading=true})
         builder.addCase(getDetailPost.fulfilled,(state,action:PayloadAction<{user:bdUser,post:PostI}>)=>{
             console.log("En el builder")
@@ -108,6 +123,17 @@ export const userSlice = createSlice({
             state.loading=false, state.error=action.payload
                         })
 
+                        
+        builder.addCase(getUserProfile.pending,state=>{state.loading=true})
+        builder.addCase(getUserProfile.fulfilled,(state,action:PayloadAction<bdUser>)=>{
+            console.log("en el user profile")
+            console.log(action.payload)
+            state.loading=false
+            state.userProfile=action.payload
+        })
+        builder.addCase(getUserProfile.rejected, (state,action:PayloadAction<any>)=>{
+            state.loading=false, state.error=action.payload
+                        })
     },
   })
 

@@ -12,7 +12,7 @@ const Sidebar = (closeToggle:any)=>{
     const isNotActiveStyle='flex items-center px-5 gap-3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize'
     const isActiveStyle='flex items-center px-5 gap-3 font-extrabold border-r-2  transition-all duration-200 ease-in-out capitalize'
     const user = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
-
+    const userAct = useAppSelector((state)=>state.userActual)
     const categories= [
         {name:"Animals"},
         {name:"Wallpapers"},
@@ -65,7 +65,7 @@ const Sidebar = (closeToggle:any)=>{
                 </div>
             </div>
             {user &&(
-                <Link to={`/`} 
+                <Link to={`/user-profile/${userAct?.id}`} 
                 className="flex my-5 mb-3 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3"
                 onClick={handleCloseSidebar}
                 >

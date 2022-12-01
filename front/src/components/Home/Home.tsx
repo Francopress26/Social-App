@@ -13,16 +13,17 @@ import Feed from '../Feed/Feed'
 import Detail from '../Detail/Detail'
 import Posts from '../Posts/Posts'
 import { user } from '../../types'
+import Profile from '../Profile/Profile'
 const Home = ()=>{
     const [toggleSidebar,setToggleSidebar]=useState(false)
     const scrollRef=useRef(null)
-    const posts = useAppSelector((state)=>state.posts)
+    const userAct = useAppSelector((state)=>state.userActual)
     const dispatch=useAppDispatch()
     const user1:user = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
     useEffect(()=>{
         
         dispatch(getAllPosts())
-        dispatch(actualUser(user1))
+        // dispatch(actualUser(user1))
     },[])
    
        
@@ -39,7 +40,7 @@ const Home = ()=>{
                 <Link to="/">
                     <img src={logo} alt="logo" className='w-28'/>
                 </Link>
-                <Link to={'/'}>
+                <Link to={`/`}>
                     <img src={user1?.picture} alt="logo" className='w-28'/>
                 </Link>
                 </div>
@@ -55,7 +56,7 @@ const Home = ()=>{
          
             <div className='pb-2 flex-1 h-screen overflow-y-scroll ' ref={scrollRef}>
                 <Routes>
-                <Route path="/user-profile/:userId" />
+                <Route path="/user-profile/:id" element={<Profile />}/>
                 <Route path='/*' element={<Posts />} />
                 
                   

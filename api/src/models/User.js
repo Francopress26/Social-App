@@ -38,6 +38,7 @@ module.exports = (sequelize) => {
     },
     followers: { 
       type: DataTypes.STRING, 
+      defaultValue:null,
       get: function() {
           return JSON.parse(this.getDataValue('followers'));
       }, 
@@ -47,6 +48,7 @@ module.exports = (sequelize) => {
     },
     followed: { 
       type: DataTypes.STRING, 
+      defaultValue:null,
       get: function() {
         return JSON.parse(this.getDataValue('followed'));
       }, 
@@ -56,6 +58,7 @@ module.exports = (sequelize) => {
     },
     liked: { 
       type: DataTypes.STRING, 
+      defaultValue:null,
       get: function() {
           return JSON.parse(this.getDataValue('liked'));
       }, 
