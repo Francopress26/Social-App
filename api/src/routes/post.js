@@ -83,4 +83,28 @@ router.post("/posts",async (req,res)=>{
       }
  })
 
+ router.put("/likes",async(req,res)=>{
+
+  const {cant}=req.query
+  const {id}=req.query
+
+  try {
+     const findPost=await Post.findOne({where:{id:id}})
+     await findPost.update(
+        {
+          likes: cant,
+        },
+        {
+          where: { id: id },
+        }
+      )
+      res.status(200).send("Updated")
+  } catch (error) {
+      console.log(error)
+      res.status(400).send(error)
+  }
+
+
+ })
+
 module.exports=router

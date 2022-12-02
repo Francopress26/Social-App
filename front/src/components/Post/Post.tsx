@@ -13,6 +13,7 @@ import { getDetailPost } from '../../state/reducers/userSlice';
 const Post = (post:PostI) => {
   const [savingPost, setSavingPost] = useState(false);
   const[liked,setLiked]=useState(false)
+  const [likes,setLikes]=useState(post.likes)
   const navigate = useNavigate();
   const [modalImg, setModalImg]=useState(false)
 const imgClose = " rounded-xl p-2 m-2 border-black"
@@ -20,8 +21,13 @@ const imgClose = " rounded-xl p-2 m-2 border-black"
 // const imgOpen = 'bg-black w-1/2 h-min fixed fixed z-50 aspect-square'
 
 const user1:user = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
+
+
 const handleLike:MouseEventHandler<HTMLButtonElement>=()=>{
-  setLiked(!liked)
+setLiked(!liked)
+liked ?setLikes(likes-1):setLikes(likes+1)
+//Dispatch put likes (likes)
+//Dispatch put de likes en el usuario(post)
 }
 const dispatch=useAppDispatch()
 
@@ -30,6 +36,11 @@ const handleClick:any= ()=>{
   dispatch(getDetailPost(post.id))
   navigate(`/detail/${post.id}`)
 }
+
+
+//Un use effect cada vez que se monte el post que busque si el usuario likeo el post, devuelve true o false
+
+
 
   return (
       <div >
@@ -62,7 +73,7 @@ const handleClick:any= ()=>{
 
       <div className='flex'>   
            <button onClick={(e)=>handleLike(e)}>{liked?<FcLike className='mr-4 ' size={40}/> :<FcLikePlaceholder className='mr-4 ' size={40}/>}</button>
-            <span className='mt-2 mr-2 font-semibold'>{post.likes}</span>
+            <span className='mt-2 mr-2 font-semibold'>{likes}</span>
       </div>
       </div>
      
