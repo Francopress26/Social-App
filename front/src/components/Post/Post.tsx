@@ -3,12 +3,12 @@ import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
-import { PostI, user } from '../../types';
+import { likePut, PostI, user } from '../../types';
 import logo from '../../assets/download.svg'
 import {FcLike,FcLikePlaceholder} from 'react-icons/fc'
 import Detail from '../Detail/Detail';
 import { useAppDispatch } from '../../state/hooks';
-import { getDetailPost } from '../../state/reducers/userSlice';
+import { addPostLike, getDetailPost } from '../../state/reducers/userSlice';
 
 const Post = (post:PostI) => {
   const [savingPost, setSavingPost] = useState(false);
@@ -17,19 +17,23 @@ const Post = (post:PostI) => {
   const navigate = useNavigate();
   const [modalImg, setModalImg]=useState(false)
 const imgClose = " rounded-xl p-2 m-2 border-black"
+const dispatch=useAppDispatch()
 
 // const imgOpen = 'bg-black w-1/2 h-min fixed fixed z-50 aspect-square'
 
 const user1:user = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
 
-
+let likesVar:number=post.likes
 const handleLike:MouseEventHandler<HTMLButtonElement>=()=>{
 setLiked(!liked)
 liked ?setLikes(likes-1):setLikes(likes+1)
-//Dispatch put likes (likes)
+//Dispatch put likes (likes) 
+dispatch(addPostLike({cant:liked?likesVar-1:likesVar+1,id:post.id}))
+
+
+
 //Dispatch put de likes en el usuario(post)
 }
-const dispatch=useAppDispatch()
 
 
 const handleClick:any= ()=>{
