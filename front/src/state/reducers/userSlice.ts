@@ -1,4 +1,4 @@
-import {user,PostI, bdUser} from '../../types'
+import {user,PostI, bdUser, likePut} from '../../types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState} from '../store'
@@ -76,6 +76,18 @@ export const getUserProfile = createAsyncThunk(
         }
 })
 
+export const addPostLike = createAsyncThunk(
+    'userSlice/addPostLike',
+    async(data:likePut, thunkApi)=>{
+        try{
+            const response = await axios.put(`http://localhost:3001/post/likes?cant=${data.cant}&id=${data.id}`)
+            return response.data
+        }catch(error:any){
+            const message = error.message;
+            return thunkApi.rejectWithValue(message);
+        }
+    }
+    )
 export const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -128,6 +140,11 @@ export const userSlice = createSlice({
             state.userProfile=action.payload
         })
         builder.addCase(getUserProfile.rejected, (state,action:PayloadAction<any>)=>{
+            state.loading=false, state.error=action.payload
+                        })
+        builder.addCase(addPostLike.pending,state=>{state.loading=true})
+        builder.addCase(addPostLike.fulfilled,state=>{state.loading=false})
+        builder.addCase(addPostLike.rejected, (state,action:PayloadAction<any>)=>{
             state.loading=false, state.error=action.payload
                         })
     },

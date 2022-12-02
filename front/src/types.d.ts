@@ -35,6 +35,11 @@ interface PostI{
     className?:string
 }
 
-export  {user,PostI,bdUser}
+interface likePut{
+    cant:number,
+    id:string
+}
+
+export  {user,PostI,bdUser,likePut}
 
 

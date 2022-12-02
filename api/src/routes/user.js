@@ -176,4 +176,40 @@ router.post("/google", async (req,res)=>{
    
  })
 
+ router.put("/likedPost",async(req,res)=>{
+    const {username}=req.query
+        const {post} = req.body
+
+    try {
+            const findUser= await User.findOne({where:{username:username}})
+            const liked = await findUser.getDataValue('liked')
+            liked.push(post)
+            await findUser.setDataValue(liked)
+
+            res.status(200).send("Liked updated")
+    } catch (error) {
+        console.log(error)
+        res.status(400).send(error)
+    }
+ })
+
+ router.get("/searchLikes" ,async (req,res)=>{
+        const {postId}=req.query
+        const {username}=req.query
+
+        try {
+            const findUser=await User.findOne({where:{username:username}})
+           const liked= findUser.getDataValue('liked')
+           const findLiked= liked.find((post)=>post.id ===postId)
+           if(findLiked){
+            res.send(true)
+           }else{
+            res.send(false)
+           }
+        } catch (error) {   
+            console.log(error)
+            res.status(400).send(error)
+        }
+ })
+
 module.exports=router
