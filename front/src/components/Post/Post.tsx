@@ -1,47 +1,40 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { MouseEventHandler, useState,useEffect } from 'react';
 import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
-import { MdDownloadForOffline } from 'react-icons/md';
-import { AiTwotoneDelete } from 'react-icons/ai';
-import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
+
 import { likePut, PostI, user } from '../../types';
-import logo from '../../assets/download.svg'
 import {FcLike,FcLikePlaceholder} from 'react-icons/fc'
-import Detail from '../Detail/Detail';
-import { useAppDispatch } from '../../state/hooks';
-import { addPostLike, getDetailPost } from '../../state/reducers/userSlice';
+import { useAppDispatch, useAppSelector } from '../../state/hooks';
+import { addPostLike, checkLike, clearDetail, getDetailPost, putLiked, putUnliked } from '../../state/reducers/userSlice';
 
 const Post = (post:PostI) => {
-  const [savingPost, setSavingPost] = useState(false);
-  const[liked,setLiked]=useState(false)
+
+  const checkLiked = useAppSelector((state)=>state.liked)
+  const[liked,setLiked]=useState(checkLiked) // Esto deberia ser el estado del reducer
   const [likes,setLikes]=useState(post.likes)
   const navigate = useNavigate();
-  const [modalImg, setModalImg]=useState(false)
-const imgClose = " rounded-xl p-2 m-2 border-black"
-const dispatch=useAppDispatch()
-
-// const imgOpen = 'bg-black w-1/2 h-min fixed fixed z-50 aspect-square'
-
+  const imgClose = " rounded-xl p-2 m-2 border-black"
+  const dispatch=useAppDispatch()
 const user1:user = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
 
-let likesVar:number=post.likes
-const handleLike:MouseEventHandler<HTMLButtonElement>=()=>{
-setLiked(!liked)
-liked ?setLikes(likes-1):setLikes(likes+1)
-//Dispatch put likes (likes) 
-dispatch(addPostLike({cant:liked?likesVar-1:likesVar+1,id:post.id}))
 
+      const handleLike:MouseEventHandler<HTMLButtonElement>=()=>{
+        setLiked(!liked)
+        liked ? setLikes(likes-1):setLikes(likes+1)
+        dispatch(addPostLike({cant:liked?likes-1:likes+1,id:post.id}))
 
-
-//Dispatch put de likes en el usuario(post)
-}
-
+      !liked ? dispatch(putLiked({email:user1.email,postId:post.id})) : dispatch(putUnliked({email:user1.email,postId:post.id}))
+      //Dispatch de borrar el like del usuario
+      }
 
 const handleClick:any= ()=>{
+  dispatch(clearDetail)
   dispatch(getDetailPost(post.id))
   navigate(`/detail/${post.id}`)
 }
 
-
+// useEffect(()=>{
+//   dispatch(checkLike({email:user1.email,postId:post.id}))
+// },[])
 //Un use effect cada vez que se monte el post que busque si el usuario likeo el post, devuelve true o false
 
 
@@ -76,6 +69,7 @@ const handleClick:any= ()=>{
       </Link>
 
       <div className='flex'>   
+            {/* post.liked?  */}
            <button onClick={(e)=>handleLike(e)}>{liked?<FcLike className='mr-4 ' size={40}/> :<FcLikePlaceholder className='mr-4 ' size={40}/>}</button>
             <span className='mt-2 mr-2 font-semibold'>{likes}</span>
       </div>
@@ -84,7 +78,8 @@ const handleClick:any= ()=>{
        
       </div>
 
-      
+      // El liked deberia estar en el post, entonces cuando yo mando a llamar todos los posts, los devuelvo sabiendo si el usuario de la sesión actual tiene puesto el like en el post o no
+
   );
 };
 

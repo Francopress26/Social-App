@@ -17,11 +17,19 @@ const breakpointObj={
 
 const MasonryLayout=()=>{
     const posts:PostI[]  = useAppSelector((state)=>state.posts)
+    const loading = useAppSelector((state)=>state.loading)
+
+    // if(loading){
+    //     return <h1>Loading</h1>
+    // }
     return (
         <Masonry className="flex animate-slide-fwd" breakpointCols={breakpointObj}>
             {posts?.map((post)=><Post key={post.id} id={post.id} image={post.image} description={post.description} postedBy={post.postedBy} likes={post.likes} profilePic={post.profilePic} comments={post.comments}/>)}
         </Masonry>
     )
+
 }
+   
+
 
 export default MasonryLayout

@@ -176,15 +176,29 @@ router.post("/google", async (req,res)=>{
    
  })
 
- router.put("/likedPost",async(req,res)=>{
-    const {username}=req.query
-        const {post} = req.body
-
+ router.put("/liked",async(req,res)=>{
+    const {email}=req.query
+    const {id} = req.query
     try {
-            const findUser= await User.findOne({where:{username:username}})
-            const liked = await findUser.getDataValue('liked')
-            liked.push(post)
-            await findUser.setDataValue(liked)
+            const findUser= await User.findOne({where:{email:email}})
+            const post = await Post.findOne({where:{id:id}})
+            let likeds = await findUser.liked
+        
+            if (likeds ===null){
+                likeds = []
+                likeds.push(post.dataValues)
+            }else{ 
+               likeds.push(post)
+            }
+
+
+            //quizas aca es un update al findUser
+           const userUpdate= await findUser.update(
+            {
+                liked:likeds
+            }
+           )
+        
 
             res.status(200).send("Liked updated")
     } catch (error) {
@@ -192,15 +206,35 @@ router.post("/google", async (req,res)=>{
         res.status(400).send(error)
     }
  })
+ router.put("/unliked",async(req,res)=>{
+    const {email}=req.query
+    const {id} = req.query
+    console.log("UNLIKED BACKEND")
+    try {
+        const findUser= await User.findOne({where:{email:email}})
+        let likeds = await findUser.liked
+        likeds=likeds.filter((el)=>el.id !== id)
+        
+       const userUpdate= await findUser.update(
+        {
+            liked:likeds
+        }
+       )
+        res.status(200).send("Liked updated")
+    } catch (error) {
+        console.log(error)
+        res.status(400).send(error)
+    }
+ })
 
  router.get("/searchLikes" ,async (req,res)=>{
-        const {postId}=req.query
-        const {username}=req.query
-
+        const {id}=req.query
+        console.log("EN EL CHECK LIKE DEL BACKEND ")
+        const {email}=req.query
         try {
-            const findUser=await User.findOne({where:{username:username}})
-           const liked= findUser.getDataValue('liked')
-           const findLiked= liked.find((post)=>post.id ===postId)
+            const findUser=await User.findOne({where:{email:email}})
+           const liked= findUser.liked
+           const findLiked= liked.find((post)=>post.id ===id)
            if(findLiked){
             res.send(true)
            }else{
@@ -211,5 +245,6 @@ router.post("/google", async (req,res)=>{
             res.status(400).send(error)
         }
  })
+
 
 module.exports=router

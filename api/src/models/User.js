@@ -37,32 +37,33 @@ module.exports = (sequelize) => {
         type:DataTypes.STRING
     },
     followers: { 
-      type: DataTypes.STRING, 
+      type: DataTypes.TEXT, 
       defaultValue:null,
-      get: function() {
+      get() {
           return JSON.parse(this.getDataValue('followers'));
       }, 
-      set: function(val) {
-          return this.setDataValue('followers', JSON.stringify(val));
+      set(val) {
+
+          return this.setDataValue('followers',JSON.stringify(val) );
       }
     },
     followed: { 
-      type: DataTypes.STRING, 
+      type: DataTypes.TEXT, 
       defaultValue:null,
-      get: function() {
+      get() {
         return JSON.parse(this.getDataValue('followed'));
       }, 
-      set: function(val) {
+      set(val) {
         return this.setDataValue('followed', JSON.stringify(val));
       }
     },
     liked: { 
-      type: DataTypes.STRING, 
+      type: DataTypes.TEXT, 
       defaultValue:null,
-      get: function() {
+      get() {
           return JSON.parse(this.getDataValue('liked'));
       }, 
-      set: function(val) {
+      set(val) {
           return this.setDataValue('liked', JSON.stringify(val));
       }
     },
@@ -77,6 +78,7 @@ module.exports = (sequelize) => {
 
   });
 };
+
 
 
 

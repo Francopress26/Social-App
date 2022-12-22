@@ -22,14 +22,28 @@ module.exports = (sequelize) => {
        type:DataTypes.INTEGER,
        defaultValue:0
     },
+    liked:{
+      type:DataTypes.BOOLEAN,
+      defaultValue:false
+    },
+    likedBy: { 
+      type: DataTypes.TEXT, 
+      defaultValue:null,
+      get() {
+          return JSON.parse(this.getDataValue('likedBy'));
+      }, 
+      set(val) {
+          return this.setDataValue('likedBy', JSON.stringify(val));
+      }
+    },
     comments: { 
       type: DataTypes.STRING, 
       defaultValue:null,
 
-      get: function() {
+      get() {
           return JSON.parse(this.getDataValue('comments'));
       }, 
-      set: function(val) {
+      set(val) {
           return this.setDataValue('comments', JSON.stringify(val));
       }
   },

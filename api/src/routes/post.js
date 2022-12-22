@@ -10,8 +10,14 @@ const API_KEY=process.env.ACCESS_KEY
 
 
 router.get("", async (req,res) =>{
+  //user ID = req.query
+  //likes= finduser.likes
+
    try {
     const posts = await Post.findAll()
+    //recorrer posts preguntando si el actual esta dentro del de los user, si es asi, post.liked =true
+    // capaz combiene cambiar estructira de likes a : likes: {username,username,username}
+    //cuando traigo todos los post busco el username q me llega x query y si esta hago post.liked=true
     res.status(200).send(posts)
    } catch (error) {
       console.log(error)
@@ -24,7 +30,8 @@ const postUserPhotos= async(page,username)=>{
     const Posts=[]
     try {
         const userPhotos= await axios.get(`https://api.unsplash.com/users/${username}/photos?page=${page}&client_id=${API_KEY}`) 
-          console.log(userPhotos.data)
+          
+
         userPhotos.data?.forEach((photo)=>{
                 const {description} =photo
                 const image=photo.urls.regular
@@ -41,7 +48,7 @@ const postUserPhotos= async(page,username)=>{
 
 
 router.post("/posts",async (req,res)=>{
-    const username="yunustug"
+    const username="sunx"
     // const index=10
       try {
         const user = await User.findOne({where: {username:username}})
@@ -90,9 +97,9 @@ router.post("/posts",async (req,res)=>{
 
   try {
      const findPost=await Post.findOne({where:{id:id}})
-     await findPost.update(
+    const postUpdated=  await findPost.update(
         {
-          likes: cant,
+          likes: Number(cant),
         },
         {
           where: { id: id },
