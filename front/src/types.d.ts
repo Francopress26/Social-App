@@ -29,6 +29,8 @@ interface PostI{
     image:string,
     description:string,
     likes:number,
+    likedBy:[{profilePicl:string,username:string}],
+    liked:boolean,
     comments:[{comment:string,username:string,profilePic:string}]
     postedBy:string,
     profilePic:string,
@@ -37,7 +39,8 @@ interface PostI{
 
 interface likePut{
     cant:number,
-    id:string
+    id:string,
+    username:string | undefined
 }
 
 export  {user,PostI,bdUser,likePut}

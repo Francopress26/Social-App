@@ -41,11 +41,11 @@ export const fetchGoogleUser = createAsyncThunk(
 
 export const getAllPosts = createAsyncThunk(
     'userSlice/getAllPosts',
-    async(data,thunkApi)=>{
+    async(data:string,thunkApi)=>{
         if(initialState.posts.length>1){return "Ya ta lleno papu"}
         try {
-            const data = await axios.get<PostI>("http://localhost:3001/post")
-            return data.data
+            const response = await axios.get<PostI>(`http://localhost:3001/post?email=${data}`)
+            return response.data
         } catch ( error:any) {
             const message = error.message;
             return thunkApi.rejectWithValue(message);
@@ -83,7 +83,7 @@ export const addPostLike = createAsyncThunk(
     'userSlice/addPostLike',
     async(data:likePut, thunkApi)=>{
         try{
-            const response = await axios.put(`http://localhost:3001/post/likes?cant=${data.cant}&id=${data.id}`)
+            const response = await axios.put(`http://localhost:3001/post/likes?cant=${data.cant}&id=${data.id}&username=${data.username}`)
             return response.data
         }catch(error:any){
             const message = error.message;

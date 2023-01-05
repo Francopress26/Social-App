@@ -22,7 +22,7 @@ const Home = ()=>{
     const user1:user = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
     useEffect(()=>{
         
-        dispatch(getAllPosts())
+        dispatch(getAllPosts(user1.email))
         // HAGO EL GET USER ACTUAL ACA PERO CON EL MAIL Y DESPUES LOS DEMÁS COMPONENTES PUEDEN ACCEDER AL ID
         dispatch(getUserProfile(user1.email))
     },[])

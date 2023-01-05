@@ -1,29 +1,30 @@
 import React, { MouseEventHandler, useState,useEffect } from 'react';
 import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 
-import { likePut, PostI, user } from '../../types';
+import { bdUser, likePut, PostI, user } from '../../types';
 import {FcLike,FcLikePlaceholder} from 'react-icons/fc'
 import { useAppDispatch, useAppSelector } from '../../state/hooks';
 import { addPostLike, checkLike, clearDetail, getDetailPost, putLiked, putUnliked } from '../../state/reducers/userSlice';
 
 const Post = (post:PostI) => {
 
-  const checkLiked = useAppSelector((state)=>state.liked)
-  const[liked,setLiked]=useState(checkLiked) // Esto deberia ser el estado del reducer
+
+  const[liked,setLiked]=useState(post.liked) // Esto deberia ser el estado del reducer
   const [likes,setLikes]=useState(post.likes)
   const navigate = useNavigate();
   const imgClose = " rounded-xl p-2 m-2 border-black"
   const dispatch=useAppDispatch()
+  const userActual=useAppSelector((state)=>state.userProfile)
 const user1:user = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
 
 
       const handleLike:MouseEventHandler<HTMLButtonElement>=()=>{
         setLiked(!liked)
         liked ? setLikes(likes-1):setLikes(likes+1)
-        dispatch(addPostLike({cant:liked?likes-1:likes+1,id:post.id}))
+        dispatch(addPostLike({cant:liked?likes-1:likes+1,id:post.id,username:userActual?.username}))
 
       !liked ? dispatch(putLiked({email:user1.email,postId:post.id})) : dispatch(putUnliked({email:user1.email,postId:post.id}))
-      //Dispatch de borrar el like del usuario
+     //falta el dispatch de borrar al usuario del LikedBy del post cada vez q se saca el like
       }
 
 const handleClick:any= ()=>{
@@ -32,10 +33,7 @@ const handleClick:any= ()=>{
   navigate(`/detail/${post.id}`)
 }
 
-// useEffect(()=>{
-//   dispatch(checkLike({email:user1.email,postId:post.id}))
-// },[])
-//Un use effect cada vez que se monte el post que busque si el usuario likeo el post, devuelve true o false
+
 
 
 

@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from "react";
-import { PostI, user } from "../../types";
+import { bdUser, PostI, user } from "../../types";
 import { useAppSelector,useAppDispatch } from "../../state/hooks";
 import {  getDetailPost } from "../../state/reducers/userSlice";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -7,10 +7,10 @@ import Feed from "../Feed/Feed";
 import MasonryLayout from "../MasonryLayout/MasonryLayout";
 
 const Detail = ()=>{
-    // const userActual:user = useAppSelector((state)=>state.userActual)
+    // const userActual:bdUser = useAppSelector((state)=>state.userActual)
     const dispatch = useAppDispatch()
    
-   const {id}= useParams()
+  //  const {id}= useParams()
     const postDetail = useAppSelector((state)=>state.postDetail)
 
     const loading = useAppSelector((state)=>state.loading)
@@ -29,25 +29,25 @@ const Detail = ()=>{
 
   return (
     <>
-    <div className="flex flex-col mb-6  items-center xl:flex-row">
+    <div className="flex flex-col mb-6  items-center xl:flex-row bg-gray-200 border-2 border-black">
 
 
-       <div className="  h-3/5 flex items-center justify-center  ">
-          <img src={postDetail.post.image} className="w-4/5 rounded xl:w-4/6"id="image" ></img>
+       <div className="  h-full w-full flex items-center justify-center my-6 ml-6 ">
+          <img src={postDetail?.post.image} className="w-4/5 rounded xl:w-full"id="image" ></img>
        </div>
 
 
-       <div className="bg-gray-200 rounded w-11/12 h-full border-2 border-black m-2 xl:w-3/5 ">
-             <div className="flex justify-around mt-6 min-w-full align-middle">
+       <div className="bg-gray-100 rounded w-11/12 h-full  m-2 xl:w-2/5 xl:self-start xl:mt-6">
+             <div className="flex justify-around mt-6 min-w-full align-middle border-b-2 border-black">
               <div className="flex w-2/4">
                   <img src={postDetail.user.profilePic} className="rounded-full w-20 h-20 m-2"/>
-                   <p className="font-semibold mt-8">{postDetail.user.username}</p>
+                   <p className="font-semibold mt-8">{postDetail?.user.username}</p>
                </div>
                <div className="flex justify-center align-middle w-1/3 "><button className="text-center h-10 px-2  mt-6 font-semibold border-2 border-black rounded-xl" >Seguir</button></div>
             </div>
             <div className="mt-12 ml-6 flex  flex-col">
-                 <p>Likes {postDetail.post.likes}</p>
-                 <p className="h-full w-full">Descripcion {postDetail.post.description}</p>
+                 <p>Likes {postDetail?.post.likes}</p>
+                 <p className="h-full w-full">Descripcion {postDetail?.post.description}</p>
              </div>
        </div>
 

@@ -6,6 +6,10 @@ const {User,Post} = require('../db.js')
 
 const API_KEY=process.env.ACCESS_KEY
 
+// http://localhost:3001/user
+//http://localhost:3001/post/posts
+//http://localhost:3001/user/posts
+
 const chargeUsers = async ()=>{
     const userNames = [ 
         "yunustug",
@@ -124,7 +128,7 @@ router.post("/google", async (req,res)=>{
    
 })
  router.post("/posts",async (req,res)=>{
-    const username="yunustug"
+    const username="sunx"
       try {
         const findUser = await User.findOne({where:{username:username}})
         console.log("user")
@@ -183,6 +187,7 @@ router.post("/google", async (req,res)=>{
             const findUser= await User.findOne({where:{email:email}})
             const post = await Post.findOne({where:{id:id}})
             let likeds = await findUser.liked
+            
         
             if (likeds ===null){
                 likeds = []
@@ -190,9 +195,6 @@ router.post("/google", async (req,res)=>{
             }else{ 
                likeds.push(post)
             }
-
-
-            //quizas aca es un update al findUser
            const userUpdate= await findUser.update(
             {
                 liked:likeds

@@ -24,7 +24,7 @@ const MasonryLayout=()=>{
     // }
     return (
         <Masonry className="flex animate-slide-fwd" breakpointCols={breakpointObj}>
-            {posts?.map((post)=><Post key={post.id} id={post.id} image={post.image} description={post.description} postedBy={post.postedBy} likes={post.likes} profilePic={post.profilePic} comments={post.comments}/>)}
+            {posts?.map((post)=><Post key={post.id} id={post.id} image={post.image} description={post.description} postedBy={post.postedBy} likes={post.likes} profilePic={post.profilePic} comments={post.comments} likedBy={post.likedBy} liked={post.liked}/>)}
         </Masonry>
     )
 

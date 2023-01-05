@@ -11,13 +11,24 @@ const API_KEY=process.env.ACCESS_KEY
 
 router.get("", async (req,res) =>{
   //user ID = req.query
-  //likes= finduser.likes
-
+  //likes= finduser.likes.filter((e)=>e.id)
+  const {email}=req.query
    try {
     const posts = await Post.findAll()
-    //recorrer posts preguntando si el actual esta dentro del de los user, si es asi, post.liked =true
-    // capaz combiene cambiar estructira de likes a : likes: {username,username,username}
-    //cuando traigo todos los post busco el username q me llega x query y si esta hago post.liked=true
+    const findUser=await User.findOne({where:{email:email}})
+    let likes = findUser.liked
+    if(likes===null){
+      likes=[]
+    }else{
+      likes= likes.map((e)=>e.id)
+    }
+    for (let index = 0; index < posts.length; index++) {
+      if(likes.includes(posts[index].id)){
+        posts[index].liked=true
+      }
+          
+      }
+   
     res.status(200).send(posts)
    } catch (error) {
       console.log(error)
@@ -83,6 +94,7 @@ router.post("/posts",async (req,res)=>{
       try {
         const findPost= await Post.findOne({where:{id:id}})
         const findUser = await User.findOne({where:{id:findPost.userId}})
+        console.log(findPost.userId)
         const details = {user:findUser,post:findPost}
         res.status(200).send(details)
       } catch (error) {
@@ -91,20 +103,46 @@ router.post("/posts",async (req,res)=>{
  })
 
  router.put("/likes",async(req,res)=>{
-
+  const {username}=req.query
   const {cant}=req.query
   const {id}=req.query
 
   try {
      const findPost=await Post.findOne({where:{id:id}})
-    const postUpdated=  await findPost.update(
+     const findUser= await User.findOne({where:{username:username}})
+
+     let likedBy=findPost.likedBy
+     console.log("ANTES")
+     console.log(likedBy)
+     
+     if(cant > findPost.likes){
+      if(likedBy===null){
+        likedBy=[]
+        likedBy.push({profilePic:findUser.profilePic,username:findUser.username})
+       }else{
+        likedBy.push({profilePic:findUser.profilePic,username:findUser.username})
+       }
+      await findPost.update(
         {
           likes: Number(cant),
-        },
-        {
-          where: { id: id },
+          likedBy:likedBy
         }
       )
+
+     }else{
+        likedBy=likedBy.filter((e)=>e.username !==username)
+        await findPost.update(
+        
+          {
+            likes: Number(cant),
+            likedBy:likedBy
+          }
+        )
+     }
+      console.log("DESPUES")
+      console.log(likedBy)
+
+
       res.status(200).send("Updated")
   } catch (error) {
       console.log(error)
