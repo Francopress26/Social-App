@@ -3,27 +3,19 @@ import {useNavigate} from 'react-router-dom'
 import shareVideo from '../../assets/share.mp4'
 import logo from '../../assets/logo.svg'
 import {GoogleCredentialResponse, GoogleLogin, googleLogout} from '@react-oauth/google'
-import axios from 'axios'
 
 import jwt_decode from 'jwt-decode'
 import {user} from '../../types'
-// import { useDispatch } from 'react-redux'
-// import { createOrLogUser } from '../../state/actions'
 import { fetchGoogleUser } from '../../state/reducers/userSlice'
-import { useAppSelector,useAppDispatch } from '../../state/hooks'
+import { useAppDispatch } from '../../state/hooks'
 const Login=()=>{
     const navigate = useNavigate()
-   
     const dispatch= useAppDispatch()
-    
- 
-  
 
     const createOrGetUser= async(response: any): Promise<void>=>{
-
-        const decoded:user=jwt_decode(response.credential)
-        const {family_name,given_name,name,picture,email,id:sub}= decoded
-        const user1:user={
+    const decoded:user=jwt_decode(response.credential)
+    const {family_name,given_name,name,picture,email,id:sub}= decoded
+    const user1:user={
             id:sub,
             family_name:family_name,
             given_name:given_name,
@@ -31,11 +23,9 @@ const Login=()=>{
             email:email,
             picture:picture
         }
-        localStorage.setItem('user',JSON.stringify(user1))
-
-       dispatch(fetchGoogleUser(user1))
-
-       navigate("/")
+    localStorage.setItem('user',JSON.stringify(user1))
+    dispatch(fetchGoogleUser(user1))
+    navigate("/")
     }
 
     return(

@@ -1,14 +1,9 @@
 import React from "react"
-import {Link,useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {IoMdAdd, IoMdSearch} from 'react-icons/io'
-import { useAppSelector } from "../../state/hooks"
-import { useAppDispatch } from "../../state/hooks"
-import userSlice, { actualUser } from "../../state/reducers/userSlice"
-import { useEffect } from "react"
 
 const Navbar=()=>{
-    const navigate= useNavigate()
-    const dispatch= useAppDispatch()
+ 
     const user1 = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
 
     return(

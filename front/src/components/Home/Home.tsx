@@ -4,20 +4,16 @@ import {AiFillCloseCircle} from 'react-icons/ai'
 import {Link,Route,Routes} from 'react-router-dom'
 import logo from '../../assets/download.svg'
 import Sidebar from '../Sidebar/Sidebar'
-import { useAppSelector}  from '../../state/hooks'
-import { actualUser, getUserProfile } from '../../state/reducers/userSlice'
+import { getUserProfile } from '../../state/reducers/userSlice'
 import { useAppDispatch } from '../../state/hooks'
 import { getAllPosts } from '../../state/reducers/userSlice'
-import MasonryLayout from '../MasonryLayout/MasonryLayout'
-import Feed from '../Feed/Feed'
-import Detail from '../Detail/Detail'
+
 import Posts from '../Posts/Posts'
 import { user } from '../../types'
 import Profile from '../Profile/Profile'
 const Home = ()=>{
     const [toggleSidebar,setToggleSidebar]=useState(false)
     const scrollRef=useRef(null)
-    const userAct = useAppSelector((state)=>state.userActual)
     const dispatch=useAppDispatch()
     const user1:user = localStorage.getItem('user') !=='undefined' ? JSON.parse(localStorage.getItem('user')|| ""): localStorage.clear()
     useEffect(()=>{
@@ -34,6 +30,7 @@ const Home = ()=>{
             <div className='hidden md:flex h-screen flex-initial border-r-black border-solid border'>
                 <Sidebar closeToggle={""} />
             </div>
+            
             <div className='flex md:hidden flex-row'>
                 <div className='p-2 w-full flex flex-row justify-between items-center shadow-md'>
 

@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch,useAppSelector } from '../../state/hooks';
-import { PostI } from '../../types';
 import MasonryLayout from '../MasonryLayout/MasonryLayout';
 import Navbar from '../Navbar/Navbar';
 const Feed = () => {
-  const [pins, setPins] = useState();
   const [loading, setLoading] = useState(false);
   const { categoryId } = useParams();
 
